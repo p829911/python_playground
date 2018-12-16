@@ -262,7 +262,6 @@ $$
 
 - 대체 할 데이터의 filtering에 실수가 있던 점 (atemp 12.12)
 
-- capital bike share의 정보에는 대여 시간, 반납 시간, 출발역, 도착역 등의 정보가 있는데 이 정보가 빠진 점이 아쉬웠음
 ---
 
 <p style="text-align: center; font-size: 50pt; font-weight: Bold; color: navy; font-family: D2Coding;"> 감사합니다. </p>

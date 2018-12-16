@@ -8,23 +8,46 @@
 <p style="text-align: center; font-size: 30pt; font-weight: Bold; font-family: D2Coding;"> 현승우 </p>
 
 ---
-# 데이터 탐색
+# 목차
+
+1. 데이터 소개
+2. 데이터 탐색 (EDA)
+3. 모델 생성
+4. 결론 및 아쉬운점
+5. Q & A
+
+---
+# 데이터 소개
+- 미국 자전거 공유 업체인 Capital Bikeshare의 렌트 정보와
+- 워싱턴 DC의 날씨를 결합해서 만든 데이터
+<br>
+
+![image](https://user-images.githubusercontent.com/17154958/50050090-6e7b9c80-0135-11e9-93c8-bb8ce47e096b.png)
+
+---
+# 데이터 소개
+
+![image](https://user-images.githubusercontent.com/17154958/50050192-8b18d400-0137-11e9-99eb-d0a091451c49.png)
+
+---
+# 데이터 소개
 ![image](https://user-images.githubusercontent.com/17154958/50039749-b689b900-007a-11e9-8ed3-7128b435f506.png)
 
 #### train shape: 10886, 12
 #### test shape: 6493, 9
 - test에서는 렌탈 수와 관련된 Casual, Registered, Count가 빠짐
 
+
 ---
 # Feature
 
-![image](https://user-images.githubusercontent.com/17154958/50039709-e1bfd880-0079-11e9-8250-c864f5798a6d.png)
+![image](https://user-images.githubusercontent.com/17154958/50050227-62dda500-0138-11e9-8fca-f86f48a7d7ba.png)
 
 ---
 
 # Feature
 
-![image](https://user-images.githubusercontent.com/17154958/50039712-f4d2a880-0079-11e9-9716-9d9a1f157640.png)
+![image](https://user-images.githubusercontent.com/17154958/50050234-89034500-0138-11e9-957d-32578246810c.png)
 
 ---
 # 초기 설정
@@ -45,16 +68,16 @@ mpl.rc('figure', dpi=100)
 ```
 train.datetime = pd.to_datetime(train.datetime)
 test.datetime = pd.to_datetime(test.datetime)
-train['day'] = train.datetime.apply(lambda x: x.day)
-test['day'] = test.datetime.apply(lambda x: x.day)
-train['weekday'] = train.datetime.apply(lambda x: x.weekday())
-test['weekday'] = test.datetime.apply(lambda x: x.weekday())
-train['hour'] = train.datetime.apply(lambda x: x.hour)
-test['hour'] = test.datetime.apply(lambda x: x.hour)
 train['year'] = train.datetime.apply(lambda x: x.year)
 test['year'] = test.datetime.apply(lambda x: x.year)
 train['month'] = train.datetime.apply(lambda x: x.month)
 test['month'] = test.datetime.apply(lambda x: x.month)
+train['day'] = train.datetime.apply(lambda x: x.day)
+test['day'] = test.datetime.apply(lambda x: x.day)
+train['hour'] = train.datetime.apply(lambda x: x.hour)
+test['hour'] = test.datetime.apply(lambda x: x.hour)
+train['weekday'] = train.datetime.apply(lambda x: x.weekday())
+test['weekday'] = test.datetime.apply(lambda x: x.weekday())
 ```
 - 문자열 형식인 datetime을 카테고리칼 변수로 만들어주는 코드
 ---
@@ -67,40 +90,40 @@ train.isnull().sum()
 ![image](https://user-images.githubusercontent.com/17154958/50039819-47ad5f80-007c-11e9-85b3-8cf0e1046c12.png)
 
 ---
-### season과 count의 boxplot
+### season과 year에 따른 count의 (boxplot)
 
 ![image](https://user-images.githubusercontent.com/17154958/50039824-63b10100-007c-11e9-8bff-e2319533d960.png)
 
 ---
-### day와 count의 boxplot
+### day별 count수 (boxplot)
 
 ![image](https://user-images.githubusercontent.com/17154958/50039846-cd310f80-007c-11e9-92b6-52e4e7596fb1.png)
 
 ---
-### weekday와 count의 boxplot
+### weekday별 count수 (boxplot)
 
 ![image](https://user-images.githubusercontent.com/17154958/50039862-f356af80-007c-11e9-882c-4ddddd8427b8.png)
 
 ---
-### hour와 count의 boxplot
-- holiday 기준
-
-![image](https://user-images.githubusercontent.com/17154958/50039874-08334300-007d-11e9-8738-76dc296e4277.png)
-
----
-### hour와 count의 boxplot
+### hour별 count수 (boxplot)
 - workingday 기준
 
 ![image](https://user-images.githubusercontent.com/17154958/50039879-1e410380-007d-11e9-8cc2-bc529be49a08.png)
 
 ---
+### hour별 count수 (boxplot)
+- holiday 기준
+
+![image](https://user-images.githubusercontent.com/17154958/50039874-08334300-007d-11e9-8738-76dc296e4277.png)
+
+---
 - 위의 두 그래프로 working day일 때는 출퇴근 시간에 사람들의 자전거 이용이 많았고
 - 일하지 않는 날에는 오후 시간대에 자전거 이용량이 많았다
-- 또한 holiday와 그래프의 분포가 거의 비슷하고 holiday의 정보가 workingday에 포함되므로
+- 또한 holiday와 그래프의 분포가 거의 비슷하고 holiday의 정보가 workingday와 weekday에 포함되므로 
 - holiday 변수를 OLS 모델에 포함시키지 않는다.
 
 ---
-### weather의 countplot
+### weather에 따른 count수 (countplot)
 
 ![image](https://user-images.githubusercontent.com/17154958/50039933-70ceef80-007e-11e9-9ff3-e49e6f2b89d6.png)
 
@@ -123,7 +146,6 @@ train.isnull().sum()
 ![image](https://user-images.githubusercontent.com/17154958/50040117-cf956880-0080-11e9-95df-f1b985ce547e.png)
 
 - atemp가 12.12인 195개의 데이터의 체감온도를 계산하여 넣음
-- (수정)temp가 25인 것 중 atemp가 12.12인 24개의 데이터만 바꿔줬어야 했을 것 같음
 
 ---
 ### 체감온도 계산
@@ -142,18 +164,19 @@ $$
 - [체감온도 산출법](https://www.kma.go.kr/HELP/basic/help_01_07.jsp)
 
 ---
+### atemp와 temp의 scatter plot
+
+![image](https://user-images.githubusercontent.com/17154958/50050682-be625f80-0145-11e9-9bfe-5f87a6293b7a.png)
+
+- atemp가 12.12인 데이터가 모두 바뀜
+- 체감 온도와 기온의 상관관계가 0.99므로 atemp만 OLS 모델에 포함시킨다.
+---
 ### 바람세기
 
 ![image](https://user-images.githubusercontent.com/17154958/50040336-cf976780-0084-11e9-93aa-1c174c979ace.png)
 
-- 체감온도를 다시 계산하고 체감온도 계산법에 바람세기가 들어가므로 바람세기를 OLS 모델에 추가하지 않는다.
+- 체감온도 계산법에 바람세기가 들어가므로 바람세기를 OLS 모델에 추가하지 않는다.
 
----
-### 수정된 atemp와 temp의 scatter plot
-
-![image](https://user-images.githubusercontent.com/17154958/50040350-28ff9680-0085-11e9-8df2-80df546d298b.png)
-
-- 체감 온도와 기온의 상관관계가 0.99므로 atemp만 OLS 모델에 포함시킨다.
 ---
 ### 습도의 distplot
 
@@ -230,6 +253,18 @@ $$
 ![image](https://user-images.githubusercontent.com/17154958/50040940-cd86d600-008f-11e9-989b-181ab1cb8d01.png)
 
 ---
+### 결론 및 아쉬운 점
+- R-square 결과 0.835가 나왔는데 더이상 올리지 못함
+
+- 변수 간의 상관관계를 찾아내어 모델에 반영하지 못함
+
+- VIF를 실행하지 않아 조건수를 내리지 못함 (season과 month의 상관관계를 간과 하였다)
+
+- 대체 할 데이터의 filtering에 실수가 있던 점 (atemp 12.12)
+
+- capital bike share의 정보에는 대여 시간, 반납 시간, 출발역, 도착역 등의 정보가 있는데 이 정보가 빠진 점이 아쉬웠음
+---
+
 <p style="text-align: center; font-size: 50pt; font-weight: Bold; color: navy; font-family: D2Coding;"> 감사합니다. </p>
 
 

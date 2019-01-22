@@ -34,7 +34,7 @@ class Recommender:
     
     def _euclidean_similarity(self, vector_1, vector_2):
         '''
-        유클리디안 유사도
+	euclidean_similarity
         '''
         
         vector_1, vector_2, _ = self._delete_zero(vector_1, vector_2)
@@ -43,8 +43,8 @@ class Recommender:
     
     def _cosine_similarity(self, vector_1, vector_2):
         '''
-        코사인 유사도
-        '''
+        cosine_similarity
+	'''
 
         vector_1, vector_2, _ = self._delete_zero(vector_1, vector_2)
         

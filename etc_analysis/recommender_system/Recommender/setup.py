@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name            = 'Recommender',
+    name            = 'Recommenderhsw',
     version         = '1.0',
     description     = 'Python Recommender System Package',
     author          = 'Seungwoo Hyun',

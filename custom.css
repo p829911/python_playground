@@ -1,0 +1,11 @@
+.CodeMirror, div.CodeMirror-code, div.output_area pre, div.output_wrapper pre { 
+	font-family: D2Coding !important; 
+	font-size: 12pt;
+} 
+
+div#notebook, div.prompt { 
+	font-family: D2Coding !important; 
+	font-size: 12pt; 
+}
+
+.container { width:90% !important; }
